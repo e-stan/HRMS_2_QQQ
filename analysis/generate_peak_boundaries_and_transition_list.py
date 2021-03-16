@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-dir = "data/IDX/"
+dir = "../data/IDX/"
 
 infoFilename = dir + "IDX_rts_M3T_pos.csv"
 
