@@ -35,7 +35,7 @@ https://pypi.org/project/srm_helper/
 
 ```
 git clone https://github.com/e-stan/HRMS_2_QQQ.git
-pip install DecoID/src/.
+pip install HRMS_2_QQQ/src/.
 ```
 
 ## Demo
