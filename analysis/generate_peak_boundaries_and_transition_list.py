@@ -3,7 +3,7 @@ import os
 
 dir = "../data/IDX/"
 
-infoFilename = dir + "IDX_rts_M3T_pos.csv"
+infoFilename = dir + "updated_IDX_rts_for_pos_cpds.csv"
 
 filenameDir = dir + "IDX_RF_data/"
 

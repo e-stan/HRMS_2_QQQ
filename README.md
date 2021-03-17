@@ -61,7 +61,6 @@ if __name__ == "__main__":
     trainingData = pd.read_csv("target_transitions_to_learn_conv.csv")
     
     msFilenames = ["training.mzML"]
-    print(msFilenames)
 
     #build conversion
     merged = srm_maker.buildConversion(msFilenames,trainingData,tic_cutoff=0,frag_cutoff=0,frag_ppm_tolerance=2 * 1e6 * .5/200)

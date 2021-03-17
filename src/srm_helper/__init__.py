@@ -38,7 +38,6 @@ class SRM_maker():
         # read in file and save all spectra
         self.decID.readData(msFile,self.ms2_resolution, True, True, self.ppm, peakDefinitions=self.uid + ".csv", tic_cutoff=tic_cutoff,
                        frag_cutoff=frag_cutoff)
-        samplesAll = deepcopy(self.decID.samples)
 
         # structure to hold spectra
         output_dict = {}
@@ -48,9 +47,12 @@ class SRM_maker():
         if len(self.decID.samples) > 0:
 
             # get charge
-            polarity = samplesAll[0]["mode"]
+            polarity = self.decID.samples[0]["mode"]
             switcher = {"Positive": 1, "Negative": -1}
             polarity = switcher[polarity]
+
+            self.decID.samples = [x for x in self.decID.samples if targets.at[targets.index.values[x["group"]],"Charge"] == polarity]
+            samplesAll = deepcopy(self.decID.samples)
 
 
             # get unique CEs
@@ -117,10 +119,10 @@ class SRM_maker():
         cpds = []
         toDrop = []
         for index, row in targetTransitions.iterrows():
-            if row['Name'] in cpds:
+            if (row['Name'],row["Charge"]) in cpds:
                 toDrop.append(index)
             else:
-                cpds.append(row['Name'])
+                cpds.append((row['Name'],row["Charge"]))
         uniquePrecursors = targetTransitions.drop(toDrop)
 
         #read files and store spectra
@@ -146,7 +148,7 @@ class SRM_maker():
         for index,row in targetTransitions.iterrows():
             optimals[index] = {"HRMS_CE":-1}
             #if MS/MS collected
-            if row["Name"] in spectra[row["Charge"]]:
+            if row["Charge"] in spectra and row["Name"] in spectra[row["Charge"]]:
                 #gather CE intensity results for transition
                 tmp = {}
                 for ce,spec in spectra[row["Charge"]][row["Name"]].items():

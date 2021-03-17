@@ -33,7 +33,7 @@ if __name__ == "__main__":
     #params
     tol = .5
     ppmTol = 10
-    numCores = 20
+    numCores = 5
 
     #create srm_maker object
     srm_maker = SRM_maker(ppm=ppmTol,numCores=numCores)
