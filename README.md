@@ -1,6 +1,6 @@
 # HRMS_2_QQQ
 
-Metabolomics software for the automated developement of SRM tables for HRMS MS/MS Data
+Metabolomics software for the automated developement of SRM tables for QqQ instruments from HRMS MS/MS Data
 
 ## System Requirements
 
@@ -16,7 +16,7 @@ pandas (v1.0.1)
 
 DecoID (v0.2.8)
 
-matplotlob (v3.1.3)
+matplotlib (v3.1.3)
 
 In order to process vendor formatted data without manual conversion, MS-Convert (http://proteowizard.sourceforge.net/tools.shtml) needs to be installed and added to PATH. 
 
