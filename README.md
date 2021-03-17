@@ -47,7 +47,6 @@ Example usage to build a conversion between two instruments and apply to list of
 ```
 from srm_helper import *
 import pandas as pd
-import numpy as np
 
 if __name__ == "__main__":
     #params
@@ -61,7 +60,7 @@ if __name__ == "__main__":
     #set datafiles for learning conversion
     trainingData = pd.read_csv("target_transitions_to_learn_conv.csv")
     
-    msFilenames = ["training_neg.csv","training_pos.csv"]
+    msFilenames = ["training.mzML"]
     print(msFilenames)
 
     #build conversion
@@ -81,10 +80,10 @@ if __name__ == "__main__":
     srm_table,breakdownCurves = srm_maker.createSRMsCE(msFilename,targets)
 
     #output SRM file
-    srm_table.to_csv(datadir + "generated_SRM_table.csv")
+    srm_table.to_csv("generated_SRM_table.csv")
 
     #plot breakdown curves
-    plotBreakdownCurves(breakdownCurves,datadir + "breakdown_curves.pdf")
+    plotBreakdownCurves(breakdownCurves,"breakdown_curves.pdf")
 
 ```
 
