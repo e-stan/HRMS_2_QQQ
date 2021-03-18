@@ -216,7 +216,7 @@ class SRM_maker():
             print("writing results")
             for cpd,(breakdown_curve,cesOpt,topFrags) in zip(cpds,result):
 
-                breakdown_curves[cpd] = breakdown_curve
+                breakdown_curves[(cpd,polarity)] = breakdown_curve
 
                 #addToSRM
                 tmp = targets[targets["Name"] == cpd]

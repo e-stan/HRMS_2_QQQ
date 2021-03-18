@@ -56,11 +56,6 @@ if __name__ == "__main__":
 
     # set datafiles to build srms
     targets = pd.read_csv("../data/IDX/targets_for_evaluation.csv")
-    #targets = pd.read_csv("../data/IDX/combined_target_list_m3t.csv")
-    #targets = targets[targets["Charge"] > .5]
-
-    # filename for HRMS MS/MS of targets
-    #msFilename = "../data/IDX/IDX_MS2_data/M3T_10uM_neg_DDA_10NCEs_25-35_50ms_5e4.mzML"
 
     srm_table = pd.DataFrame()
     breakdownCurves = {}
