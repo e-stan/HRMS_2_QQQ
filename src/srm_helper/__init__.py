@@ -227,7 +227,7 @@ class SRM_maker():
                     srm[ind] = {c:tmp.at[i,c] for c in cols}
                     srm[ind]["Product mz"] = frag
                     srm[ind]["CE"] = self.CE_converter([srm[ind]["mz"],ce])
-                    srm[ind]["Normalized Intensity"] = breakdown_curves[cpd][frag][ce]
+                    srm[ind]["Normalized Intensity"] = breakdown_curves[(cpd,polarity)][frag][ce]
                     srm[ind]["Charge"] = polarity
                     ind += 1
 
@@ -249,10 +249,13 @@ def normalizeSpectrum(spectrum,rts,ms1,mz,rt_start,rt_end,ppm):
     #func = extractChromatogram(row["mz"], self.decID.ms1, [row["rt_start"], row["rt_end"]], self.ppm)
     func = extractChromatogram(mz, ms1, [rt_start, rt_end], ppm)
 
+    allRts = np.linspace(rt_start,rt_end,1000)
+    totalPeakArea = np.trapz([func(x)[0] for x in allRts],allRts)
+
     normalizer = np.sum([func(x) for x in rts])
 
     # normalize spectra and save result
-    return {key: val / normalizer for key, val in spectrum.items()}
+    return {key: totalPeakArea * val / normalizer for key, val in spectrum.items()}
 
 
 def findTransitions(spectra,precursorMz,lowestProduct,numProduct):
@@ -379,4 +382,15 @@ def extractChromatogram(mz, ms1, rtRange,mError):
     func = lambda x: np.interp([x],tempMs1[:,0],tempMs1[:,1])
     return func
 
+
+def integrateTargets(ms1,targets,ppm):
+    intensities = {}
+    for index,row in targets:
+        func = extractChromatogram(row["mz"],ms1,[row["rt_start"],row["rt_end"]],ppm)
+        allRts = np.linspace(row["rt_start"],row["rt_end"],1000)
+        totalPeakArea = np.trapz([func(x) for x in allRts],allRts)
+        intensities[index] = {"Peak Area": totalPeakArea}
+
+    intensities = pd.DataFrame.from_dict(intensities)
+    return pd.concat((targets,intensities),axis=1,ignore_index=False)
 
