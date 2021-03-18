@@ -41,10 +41,10 @@ if __name__ == "__main__":
 
     # set datafiles for learning conversion
     trainingData = pd.read_csv("../data/IDX/target_transitions_to_learn_conv.csv")
-    print(len(trainingData))
 
-    msFilenames = ["../data/IDX/IDX_MS2_data/M3T_10uM_neg_DDA_10NCEs_25-35_50ms_5e4.mzML","../data/IDX/IDX_MS2_data/M3T_10uM_pos_DDA_10NCEs_25-35_50ms_5e4_DE5s.mzML"]
-    #msFilenames = ["../data/IDX/IDX_MS2_data/M3T_10uM_pos_DDA_10NCEs_25-35_50ms_5e4_DE5s.mzML"]
+    msFilenames = ["../data/IDX/IDX_MS2_data/M3T_10uM_pos_DDA_10NCEs_25-35_50ms_5e4_DE5s_updatedRT.mzML",
+                   "../data/IDX/IDX_MS2_data/M3T_10uM_neg_DDA_10NCEs_25-35_50ms_5e4_DE5s_updatedRT.mzML",
+                   "../data/IDX/IDX_MS2_data/M3T_10uM_pos_DDA_10NCEs_25-35_80ms_1e4_DE5s_updatedRT_missing.mzML"]
 
     #build conversion
     merged = srm_maker.buildConversion(msFilenames, trainingData, tic_cutoff=0, frag_cutoff=0,
