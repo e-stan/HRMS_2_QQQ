@@ -203,8 +203,8 @@ class SRM_maker():
             for cpd in cpds:
                 #get precursor mz
                 precursorMz = targets[targets["Name"] == cpd]
+                precursorMz = precursorMz[precursorMz["Charge"] == polarity]
                 precursorMz = precursorMz.at[precursorMz.index.values[0],"mz"]
-
                 args.append([output_dict[cpd],precursorMz,lowestProduct,numProduct])
 
             print("starting to find transitions")
@@ -219,7 +219,7 @@ class SRM_maker():
                 breakdown_curves[(cpd,polarity)] = breakdown_curve
 
                 #addToSRM
-                tmp = targets[targets["Name"] == cpd]
+                tmp = targets[(targets["Name"] == cpd) & (targets["Charge"] == polarity)]
                 cols = tmp.columns.values
                 i = tmp.index.values[0]
 
