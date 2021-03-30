@@ -15,7 +15,7 @@ import pickle as pkl
 
 class SRM_maker():
 
-    def __init__(self,ppm=10,numCores=2,CE_converter=lambda x: x,ms2_resolution = 2):
+    def __init__(self,ppm=10,numCores=2,CE_converter=lambda x: x[1],ms2_resolution = 2):
         self.ppm = ppm
         self.numCores = numCores
         self.CE_converter = CE_converter
