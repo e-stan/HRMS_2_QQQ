@@ -78,33 +78,34 @@ class SRM_maker():
                     ceList.append(ce)
                     gs.append(g)
 
-            p = Pool(min([self.numCores,len(args)]))
-            results = p.starmap(sumSpectra,args,chunksize=int(len(args)/min([self.numCores,len(args)])))
-            p.close()
-            p.join()
+            if len(args) > 0:
+                p = Pool(min([self.numCores,len(args)]))
+                results = p.starmap(sumSpectra,args,chunksize=int(len(args)/min([self.numCores,len(args)])))
+                p.close()
+                p.join()
 
-            spectra = {(g,ce):spec for g,spec,ce in zip(gs,results,ceList)}
+                spectra = {(g,ce):spec for g,spec,ce in zip(gs,results,ceList)}
 
 
-            names = []
-            ceList = []
-            args = []
-            for (ind,ce),spectrum in spectra.items():
-                row = targets.iloc[ind,:]
-                rts = [x["rt"] for x in self.decID.samples if x["group"] == ind]
-                args.append([spectrum,rts,self.decID.ms1,row["mz"],row["rt_start"],row["rt_end"],self.ppm])
-                names.append(row["Name"])
-                ceList.append(ce)
+                names = []
+                ceList = []
+                args = []
+                for (ind,ce),spectrum in spectra.items():
+                    row = targets.iloc[ind,:]
+                    rts = [x["rt"] for x in self.decID.samples if x["group"] == ind]
+                    args.append([spectrum,rts,self.decID.ms1,row["mz"],row["rt_start"],row["rt_end"],self.ppm])
+                    names.append(row["Name"])
+                    ceList.append(ce)
 
-            p = Pool(min([self.numCores,len(args)]))
-            results = p.starmap(normalizeSpectrum,args,chunksize=int(len(args)/min([self.numCores,len(args)])))
-            p.close()
-            p.join()
+                p = Pool(min([self.numCores,len(args)]))
+                results = p.starmap(normalizeSpectrum,args,chunksize=int(len(args)/min([self.numCores,len(args)])))
+                p.close()
+                p.join()
 
-            for name,ce,spectrum in zip(names,ceList,results):
-                if name not in output_dict:
-                    output_dict[name] = {}
-                output_dict[name][ce] = spectrum
+                for name,ce,spectrum in zip(names,ceList,results):
+                    if name not in output_dict:
+                        output_dict[name] = {}
+                    output_dict[name][ce] = spectrum
 
 
         os.remove(self.uid + ".csv")
