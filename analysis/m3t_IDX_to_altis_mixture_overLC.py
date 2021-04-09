@@ -23,7 +23,7 @@ for index,row in targets.iterrows():
     if (row['Name'],row["Charge"]) in cpds:
         toDrop.append(index)
     else:
-        cpds.append((row['Name'],row["Charge"]))
+       cpds.append((row['Name'],row["Charge"]))
 
 targets = targets.drop(toDrop)
 goodCols = ["Name","rt_start","rt_end","mz","Charge"]
@@ -45,6 +45,24 @@ if __name__ == "__main__":
     msFilenames = ["../data/IDX/IDX_MS2_data/M3T_10uM_pos_DDA_10NCEs_25-35_50ms_5e4_DE5s_updatedRT.mzML",
                    "../data/IDX/IDX_MS2_data/M3T_10uM_neg_DDA_10NCEs_25-35_50ms_5e4_DE5s_updatedRT.mzML",
                    "../data/IDX/IDX_MS2_data/M3T_10uM_pos_DDA_10NCEs_25-35_80ms_1e4_DE5s_updatedRT_missing.mzML"]
+
+    # set datafiles to build srms
+    targets = pd.read_csv("../data/IDX/targets_for_evaluation.csv")
+
+    srm_table = pd.DataFrame()
+    breakdownCurves = {}
+
+    for msFilename in msFilenames:
+
+        # create SRM table
+        srm_table1, breakdownCurves1 = srm_maker.createSRMsCE(msFilename, targets)
+
+        srm_table = pd.concat((srm_table,srm_table1),axis=0,ignore_index=True)
+        breakdownCurves.update(breakdownCurves1)
+
+    # output SRM file
+    srm_table.to_csv("../data/IDX/generated_SRM_table_unconverted.csv")
+
 
     #build conversion
     merged = srm_maker.buildConversion(msFilenames, trainingData, tic_cutoff=0, frag_cutoff=0,
