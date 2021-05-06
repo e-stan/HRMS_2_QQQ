@@ -22,7 +22,7 @@ In order to process vendor formatted data without manual conversion, MS-Convert 
 
 ## Installation
 
-### Installation with ```pip```:
+### Installation with ```pip``` (coming soon):
 
 ```
 pip install srm_helper
