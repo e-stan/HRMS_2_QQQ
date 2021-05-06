@@ -1,6 +1,6 @@
 # HRMS_2_QQQ
 
-Metabolomics software for the automated developement of SRM tables for QqQ instruments from HRMS MS/MS Data
+Metabolomics software for the automated development of MRM methods for QqQ instruments from HRMS MS/MS data
 
 ## System Requirements
 
