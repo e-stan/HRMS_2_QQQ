@@ -379,8 +379,12 @@ def extractChromatogram(mz, ms1, rtRange,mError):
     for rt in allRt:
         tempMs1.append([rt, getInt(rt)])
 
-    tempMs1 = np.array(tempMs1)
-    func = lambda x: np.interp([x],tempMs1[:,0],tempMs1[:,1])
+    if len(tempMs1) > 1:
+        tempMs1 = np.array(tempMs1)
+        func = lambda x: np.interp([x],tempMs1[:,0],tempMs1[:,1])
+    else:
+        func = lambda x: [0]
+
     return func
 
 
